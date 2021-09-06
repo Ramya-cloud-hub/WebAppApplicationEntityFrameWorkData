@@ -1,0 +1,21 @@
+﻿@model WebAppAssignmentDATABASE_5.Models.Person
+
+<div class="row">
+    <div class="col-sm">
+        @Html.DisplayFor(model =>model.PersonId)
+    </div>
+        <div class="col-sm">
+        @Html.DisplayFor(model =>model.PersonName)
+    </div>
+        <div class="col-sm">
+        @Html.DisplayFor(model =>model.PersonPhoneNumber)
+    </div>
+        <div class="col-sm">
+        @Html.DisplayFor(model =>model.PersonCity)
+    </div>      
+    <div class="col-sm">
+        @Html.ActionLink("Delete","Remove","People",new{Model.PersonId},null)
+    </div>
+
+</div>
+
