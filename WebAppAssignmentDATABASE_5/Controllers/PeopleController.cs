@@ -11,74 +11,62 @@ namespace WebAppAssignmentDATABASE_5.Controllers
     public class PeopleController : Controller
     {
 
-       private readonly IPeopleService _peopleService;
-       
-        //Dependency Injection to the constructor
+        IPeopleService _peopleService;
+
         public PeopleController(IPeopleService peopleService)
-        { 
+        {
             _peopleService = peopleService;
         }
-
 
         [HttpGet]
         public IActionResult Index()
         {
-     
-           PeopleService checkListView = new PeopleService();
-            PeopleViewModel peopleList = new PeopleViewModel();
-
-            InMemoryPeopleRepo makeBaseList = new InMemoryPeopleRepo();
-
-            peopleList.PeopleListView = checkListView.All().PeopleListView;
-
-            if (peopleList.PeopleListView.Count == 0 || peopleList.PeopleListView == null)
+            if (_peopleService.All().PersonList.Count == 0)
             {
-                makeBaseList.CreateBasePersons();
+                _peopleService.CreateDefaultPeople();
             }
 
-            return View(peopleList);
+            return View(_peopleService.All());
         }
 
-
-
         [HttpPost]
-        public IActionResult Index(PeopleViewModel peopleviewModel)
+        public IActionResult Index(PeopleViewModel peopleViewModel)
         {
-            PeopleService filterString = new PeopleService();
-
-            peopleviewModel = filterString.FindBy(peopleviewModel);
-            return View(peopleviewModel);
+            if (peopleViewModel.FilterText != null)
+            {
+                peopleViewModel = _peopleService.FindBy(peopleViewModel);
+            }
+            else
+            {
+                return RedirectToAction(nameof(Index));
+            }
+            return View(peopleViewModel);
         }
 
         [HttpGet]
-        public IActionResult CreatePerson()
+        public IActionResult Create()
         {
             return View();
         }
 
         [HttpPost]
-        public IActionResult CreatePerson(CreatePersonViewModel personViewModel) 
+        public IActionResult Create(CreatePersonViewModel createPersonViewModel)
         {
-
             if (ModelState.IsValid)
             {
+                _peopleService.Add(createPersonViewModel);
 
-                _peopleService.Add(personViewModel);
                 return RedirectToAction(nameof(Index));
             }
 
-            return View(personViewModel);
+            return View(createPersonViewModel);
         }
 
-
-        public IActionResult DeletePerson(int id)
+        public IActionResult Remove(int id)
         {
-            PeopleService deleteById = new PeopleService();
-            deleteById.Remove(id);
+            _peopleService.Remove(id);
 
-            return RedirectToAction("Index");
+            return RedirectToAction(nameof(Index));
         }
-    
-
     }
 }

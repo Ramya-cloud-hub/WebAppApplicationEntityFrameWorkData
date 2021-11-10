@@ -11,43 +11,26 @@ namespace WebAppAssignmentDATABASE_5
 {
     public class Startup
     {
-       //  private readonly IConfiguration Configuration;
         public Startup(IConfiguration configuration)
         {
             Configuration = configuration;
         }
+
         public IConfiguration Configuration { get; }
 
-        //in this method we canconfigure services for the project
+       
         public void ConfigureServices(IServiceCollection services)
         {
-
-            services.AddScoped<IPeopleService, PeopleService>();
-            services.AddScoped<IPeopleRepo, InMemoryPeopleRepo>();
-            services.AddScoped<IPeopleRepo, DatabasePeopleRepo>();          
-            services.AddScoped<DbContext, ExDbContext>();
             services.AddControllersWithViews();
 
-            services.AddDbContext<ExDbContext>(options =>
-            options.UseSqlServer(Configuration.GetConnectionString("PersonDb")));
+            services.AddScoped<IPeopleRepo, InMemoryPeopleRepo>();
 
+            services.AddScoped<IPeopleService, PeopleService>();
 
-
-
-
-
-
-            services.AddDistributedMemoryCache();
-
-            services.AddSession(options =>
-            {
-                options.Cookie.Name = ".RamyaSession.Session";
-                options.IdleTimeout = TimeSpan.FromSeconds(300);
-                options.Cookie.HttpOnly = true;
-                options.Cookie.IsEssential = true;
-            });
+            services.AddMvc();
         }
-        // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
+
+        
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
             if (env.IsDevelopment())
@@ -56,10 +39,10 @@ namespace WebAppAssignmentDATABASE_5
             }
             else
             {
-                app.UseExceptionHandler("/Error");
+                app.UseExceptionHandler("/Home/Error");
+               
                 app.UseHsts();
             }
-
             app.UseHttpsRedirection();
             app.UseStaticFiles();
 
@@ -67,13 +50,11 @@ namespace WebAppAssignmentDATABASE_5
 
             app.UseAuthorization();
 
-            app.UseSession();
-
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllerRoute(
-                name: "default",
-                pattern: "{controller=People}/{action=Index}");
+                    name: "default",
+                    pattern: "{controller=Home}/{action=Index}/{id?}");
             });
         }
     }

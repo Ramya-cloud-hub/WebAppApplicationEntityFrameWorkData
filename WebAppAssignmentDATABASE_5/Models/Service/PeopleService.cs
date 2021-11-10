@@ -8,82 +8,78 @@ using WebAppAssignmentDATABASE_5.Models.ViewModel;
 namespace WebAppAssignmentDATABASE_5.Models
 {
     public class PeopleService : IPeopleService
-    {    
+    {
         //Dependency Injection to the constructor
-        private readonly  IPeopleRepo _peopleRepo;
+        IPeopleRepo _peopleRepo;
 
         public PeopleService(IPeopleRepo peopleRepo)
         {
             _peopleRepo = peopleRepo;
         }
 
-        public PeopleService()
-        {
-        }
-
         public Person Add(CreatePersonViewModel person)
         {
-            InMemoryPeopleRepo createAndStorePerson = new InMemoryPeopleRepo();
-            Person madePerson = createAndStorePerson.Create(person.PersonName, person.PersonPhoneNumber, person.PersonCity);
-
-            return madePerson;
+            return _peopleRepo.Create(person.Name, person.City, person.Phone);
         }
-
-        public Person Edit(int id, Person person)
-        {
-            return _peopleRepo.Update(person);
-        }
-
-        public PeopleViewModel FindBy(PeopleViewModel search)
-        {
-            InMemoryPeopleRepo loadListForSearch = new InMemoryPeopleRepo();
-            search.PeopleListView.Clear();
-
-            foreach (Person item in loadListForSearch.Read())
-            {
-                if (item.PersonName.Contains(search.FilterString, StringComparison.OrdinalIgnoreCase) || item.PersonCity.Contains(search.FilterString, StringComparison.OrdinalIgnoreCase))
-                {
-                    search.PeopleListView.Add(item);
-                }
-            }
-            if (search.PeopleListView.Count == 0)
-            {
-                search.SearchResultEmpty = $"No Person or City could be found, matching \"{search.FilterString}\" ";
-            }
-            else
-            {
-                search.SearchResultEmpty = "";
-            }
-            return search;
-        }
-
-        public Person FindBy(int id)
-        {
-            throw new NotImplementedException();
-        }
-
-
 
         public PeopleViewModel All()
         {
-            InMemoryPeopleRepo inMemoryPeopleRepo = new InMemoryPeopleRepo();
+            PeopleViewModel peopleViewModel = new PeopleViewModel();
 
-            PeopleViewModel peopleViewModel = new PeopleViewModel() { PeopleListView = inMemoryPeopleRepo.Read() };
+            peopleViewModel.PersonList = _peopleRepo.Read();
 
             return peopleViewModel;
         }
 
+        public Person Edit(int id, Person person)
+        {
+            return _peopleRepo.Update(person); //ID?
+        }
+
+        public PeopleViewModel FindBy(PeopleViewModel search)
+        {
+            List<Person> searchedPersonList = new List<Person>();
+
+            foreach (Person item in _peopleRepo.Read())
+            {
+                if (item.City.Contains(search.FilterText, StringComparison.OrdinalIgnoreCase) || item.Name.Contains(search.FilterText, StringComparison.OrdinalIgnoreCase))
+                {
+                    searchedPersonList.Add(item);
+                }
+            }
+            search.PersonList = searchedPersonList;
+
+            return search;
+        }
+
+        public Person Findby(int id)
+        {
+            return _peopleRepo.Read(id);
+        }
 
         public bool Remove(int id)
         {
+            List<Person> listPersons = _peopleRepo.Read();
+            bool deleted = false;
 
-            InMemoryPeopleRepo deletePerson = new InMemoryPeopleRepo();
-            Person personToDelete = deletePerson.Read(id);
-            deletePerson.Delete(personToDelete);
+            foreach (Person item in listPersons)
+            {
+                if (item.Id == id)
+                {
+                    return _peopleRepo.Delete(item);
+                }
+            }
 
-            return true;
-
+            return deleted;
         }
 
+        public void CreateDefaultPeople()
+        {
+            _peopleRepo.Create("Ramya", "Göteborg", 017609856);
+            _peopleRepo.Create("Srinivas", "Bangelore", 0987986785);
+            _peopleRepo.Create("Mamatha", "Mysore", 009878967);
+            _peopleRepo.Create("Kishore", "Hyderabad", 0987967851);
+            _peopleRepo.Create("Saranya", "Stckholm", 091453147);
+        }
     }
 }

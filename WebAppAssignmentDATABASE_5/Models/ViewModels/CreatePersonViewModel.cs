@@ -11,24 +11,16 @@ namespace WebAppAssignmentDATABASE_5.Models.ViewModel
         [DataType(DataType.Text)]
         [StringLength(20, MinimumLength =1)]
         [Required(ErrorMessage = "* Please enter name"), MaxLength(50)]
-        [Display(Name = "Name")]
-        public string PersonName { get; set; }
+        public string Name { get; set; }
 
-
+        [Required]
         [DataType(DataType.PhoneNumber)]
-        [Required(ErrorMessage = "* Please enter phonenumber"), MaxLength(30)]
-        [Display(Name = "PhoneNumber")]
-        public string PersonPhoneNumber { get; set; }
+        public int Phone { get; set; }
 
+        [Required]
+        [StringLength(15, MinimumLength = 1)]
+        public string City { get; set; }
 
-        [DataType(DataType.Text)]
-        [Required(ErrorMessage = "* Please enter city"), MaxLength(50)]
-        [Display(Name = "City")]
-        [StringLength(15,MinimumLength =1)]
-        public string PersonCity { get; set; }
-
-        [Key]
-        public int Id { get; set; }
         public CreatePersonViewModel()
         {
 

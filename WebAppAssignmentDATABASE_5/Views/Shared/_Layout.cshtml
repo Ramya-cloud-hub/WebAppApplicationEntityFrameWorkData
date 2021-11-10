@@ -1,55 +1,47 @@
 ﻿<!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-    <meta name="viewport" content="width=device-width" />
-    <title>@ViewBag.Title</title>
-      <script src="~/js/site.js"></script>
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-    <link rel="stylesheet" href="~/bootstrap-5.0.2-dist/css/bootstrap.min.css" />
-     <link rel="stylesheet" href="~/css/styles.css" />
-     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
-  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
-  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
-   
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"] - ASP_MCV_DataAssignments</title>
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="~/css/site.css" />
+    <link rel="stylesheet" href="~/css/StyleSheet.css" />
 </head>
-<body class="mx-auto">
-    <div class="container-fluid  my-3 bg-dark text-white">
-       
-        <div class="row">
-
-        <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-            <nav class="navbar navbar-expand-sm bg-info text-black" id="navmenubox">
-                 <ul class="navbar-nav text-white">
-
-                         <li>   
-                             <a class="nav-link" id="menulogo" asp-controller="People" asp-action="Index">
-                                <img alt="logo" src="@Url.Content("~/pictures/nature2.jpg")">
-                            </a>         
-                         </li>  
-                         <li class="nav-item">
-                            <a class="nav-link text-dark" href="@Url.Action("Index", "People")">HOME PAGE</a>
-                        </li>
-                          <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Ajax" asp-action="Index">Ajax</a> 
+<body>
+    <header>
+        <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
+            <div class="headerContainer container">
+                <a class="navbar-brand" asp-area="" asp-controller="People" asp-action="Index">Logo</a>
+                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target=".navbar-collapse" aria-controls="navbarSupportedContent"
+                        aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="navbar-collapse collapse d-sm-inline-flex flex-sm-row-reverse header">
+                    <ul class="navbar-nav flex-grow-1">
+                        <li class="nav-item">
+                            <a class="nav-link text-dark" asp-area="" asp-controller="People" asp-action="Index">People</a>
                         </li>
                     </ul>
-            </nav>
-       </div>
-       </div>
-
-       <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-                <div>
-                    @RenderBody()
                 </div>
-        </div>
+            </div>
+        </nav>
 
-    
+    </header>
+    <div class="Bodycontainer container">
+        <main role="main" class="pb-3">
+            @RenderBody()
+        </main>
+    </div>
+
     <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 ">
-        <footer class="navbar navbar-expand-sm bg-info"   >
-            <span style="padding-left:240px" >&#64;Ramya Talagavadi Kalegowda&nbsp;&nbsp;&nbsp;&nbsp;<a class="btn btn-primary" href="#">Back To Top</a></span>
+        <footer>
+            <span style="padding-left:240px">&#64;Ramya Talagavadi Kalegowda&nbsp;&nbsp;&nbsp;&nbsp;<a class="btn btn-primary" href="#">Back To Top</a></span>
         </footer>
     </div>
-</div> <!--Container End-->
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="~/js/site.js" asp-append-version="true"></script>
+    @RenderSection("Scripts", required: false)
 </body>
 </html>

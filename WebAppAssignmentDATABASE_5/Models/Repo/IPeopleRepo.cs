@@ -9,10 +9,10 @@ namespace WebAppAssignmentDATABASE_5.Models
 {
    public interface IPeopleRepo
     {
-        public Person Create(string PersonName, string PersonPhoneNumber, string PersonCity);
-        public List<Person> Read();
-        public Person Read(int id);
-        public Person Update(Person person);
-        public bool Delete(Person person);
+        Person Create(string name, string city, int phoneNumber);
+        List<Person> Read();
+        Person Read(int id);
+        Person Update(Person person);
+        bool Delete(Person person);
     }
 }

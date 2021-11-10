@@ -9,24 +9,23 @@ namespace WebAppAssignmentDATABASE_5.Models
     public class InMemoryPeopleRepo : IPeopleRepo
     {
         private static List<Person> _personList = new List<Person>();
-        private static int _idCounter = 0;
+        private static int idCounter = 0;
 
-
-
-
-        public Person Create(string PersonName, string PersonPhoneNumber, string PersonCity)
+        public Person Create(string name, string city, int phoneNumber)
         {
-            Person newPerson = new Person(_idCounter, PersonName, PersonPhoneNumber, PersonCity);
-            _idCounter++;
-            _personList.Add(newPerson);
-            return newPerson;
+            Person person = new Person(name, phoneNumber, city, idCounter);
+            idCounter++;
+
+            _personList.Add(person);
+
+            return person;
         }
 
         public bool Delete(Person person)
         {
-            bool delete = _personList.Remove(person);
-            
-            return delete;
+            bool deleted = _personList.Remove(person);
+
+            return deleted;
         }
 
         public List<Person> Read()
@@ -36,34 +35,30 @@ namespace WebAppAssignmentDATABASE_5.Models
 
         public Person Read(int id)
         {
-            Person findPersonById = _personList.Find(idNr => idNr.PersonId == id);
+            foreach (Person item in _personList)
+            {
+                if (item.Id == id)
+                {
+                    return item;
+                }
+            }
 
-            return findPersonById;
+            return null;
         }
 
         public Person Update(Person person)
         {
-            foreach(Person item in _personList)
+            foreach (Person item in _personList)
             {
-                if(item.PersonId == person.PersonId)
+                if (item.Id == person.Id)
                 {
-                    item.PersonName = person.PersonName;
-                    item.PersonPhoneNumber = person.PersonPhoneNumber;
-                    //item.PersonCity = person.PersonCity;
+                    item.Name = person.Name;
+                    item.Phone = person.Phone;
+                    item.City = person.City;
                 }
             }
-            return person;
-        }
-        public void CreateBasePersons()
-          {
-            InMemoryPeopleRepo pDataBase = new InMemoryPeopleRepo();
-            pDataBase.Create("Ramya Talagavadi Kalegowda", "08236 75578", "Bengalore");
-            pDataBase.Create("Rekha Gowda", "0¨989 897657 ", "Bengalore");
-            pDataBase.Create("Sowmya Sri", "0888 469879", "Malmö");
-            pDataBase.Create("Naga chithanya Sri", "0888 469879", "Malmö");
-            pDataBase.Create("Saranya", "0888 469879", "Malmö");
-            pDataBase.Create("Vijaya", "0888 469879", "Malmö");
 
+            return person;
         }
     }
 }

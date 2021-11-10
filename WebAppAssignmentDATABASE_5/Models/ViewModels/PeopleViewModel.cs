@@ -11,17 +11,9 @@ namespace WebAppAssignmentDATABASE_5
 {
     public class PeopleViewModel : CreatePersonViewModel
     {
-        public List<Person> PeopleListView { get; set; }
+        public string FilterText { get; set; }
 
-        public string FilterString { get; set; }
-
-        public string SearchResultEmpty { get; set; }
-        public static object FilterText { get; internal set; }
-
-        public PeopleViewModel()
-        {
-            PeopleListView = new List<Person>();
-        }
+        public List<Person> PersonList { get; set; }
 
     }
 }

@@ -10,17 +10,14 @@ namespace WebAppAssignmentDATABASE_5.Models
 {
     public interface IPeopleService
     {
-         Person Add(CreatePersonViewModel person);
-
-         PeopleViewModel All();
-
-         PeopleViewModel FindBy(PeopleViewModel search);
-
-        Person FindBy(int id);
-
-         Person Edit(int id, Person person);
-
+        Person Add(CreatePersonViewModel person);
+        PeopleViewModel All();
+        PeopleViewModel FindBy(PeopleViewModel search);
+        Person Findby(int id);
+        Person Edit(int id, Person person);
         bool Remove(int id);
-       
+
+        void CreateDefaultPeople();
+
     }
 }
