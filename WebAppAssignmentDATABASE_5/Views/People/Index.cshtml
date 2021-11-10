@@ -33,27 +33,26 @@
     <label asp-for="FilterText"></label>
     <input asp-for="FilterText" />
 </form>
-
-<table class="table">
-    <thead>
-        <tr>
-            <th>Id</th>
-            <th>Name</th>
-            <th>PhoneNumber</th>
-            <th>City Name</th>
-        </tr>
-    </thead>
-    <tbody>
-        @foreach (var item in Model.PersonList)
-        {
+<br/>
+<div class="row">
+    <table class="table myTable">
+        <thead>
             <tr>
-                <td>@item.Id</td>
-                <td>@item.Name</td>
-                <td>@item.Phone</td>
-                <td>@item.City</td>
-                <td> @Html.ActionLink("Delete", "Remove", "People", new { @item.Id }, null)  </td>
-
+                <th>Id</th>
+                <th>Name</th>
+                <th>Phone</th>
+                <th>City</th>
+                <th></th>
+                <th></th>
+                <th></th>
+                
             </tr>
-        }
-    </tbody>
-</table>
+        </thead>
+    </table>
+</div>
+
+
+    @foreach (var item in Model.PersonList)
+    {
+        <partial name="../Ajax/PersonPartial.cshtml" for="@item" />
+    }

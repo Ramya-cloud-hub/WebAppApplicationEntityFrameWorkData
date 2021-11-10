@@ -10,7 +10,7 @@ namespace WebAppAssignmentDATABASE_5.Controllers
 {
     public class PeopleController : Controller
     {
-
+        //dependency injection
         IPeopleService _peopleService;
 
         public PeopleController(IPeopleService peopleService)
@@ -21,10 +21,10 @@ namespace WebAppAssignmentDATABASE_5.Controllers
         [HttpGet]
         public IActionResult Index()
         {
-            if (_peopleService.All().PersonList.Count == 0)
-            {
-                _peopleService.CreateDefaultPeople();
-            }
+            //if (_peopleService.All().PersonList.Count == 0)
+            //{
+            //    _peopleService.CreateDefaultPeople();
+            //}
 
             return View(_peopleService.All());
         }

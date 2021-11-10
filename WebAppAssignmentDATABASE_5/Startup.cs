@@ -6,6 +6,8 @@ using Microsoft.Extensions.Hosting;
 using System;
 using WebAppAssignmentDATABASE_5.Models;
 using Microsoft.EntityFrameworkCore;
+using WebAppAssignmentDATABASE_5.Models.Repo;
+using WebAppAssignmentDATABASE_5.Data;
 
 namespace WebAppAssignmentDATABASE_5
 {
@@ -22,10 +24,10 @@ namespace WebAppAssignmentDATABASE_5
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddControllersWithViews();
-
-            services.AddScoped<IPeopleRepo, InMemoryPeopleRepo>();
-
             services.AddScoped<IPeopleService, PeopleService>();
+            services.AddScoped<IPeopleRepo, DatabasePeopleRepo>();    
+            services.AddDbContext<PeopleDbContext>(options =>
+            options.UseSqlServer(Configuration.GetConnectionString("PersonDB")));
 
             services.AddMvc();
         }

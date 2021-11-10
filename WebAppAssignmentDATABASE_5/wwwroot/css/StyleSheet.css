@@ -68,10 +68,10 @@ a:hover {
     width: 200px;
     text-transform: uppercase;
 }
+
 footer {
     text-align: center;
     display: block;
     height: 60px;
-    width:100%;
-  
+    width: 100%;
 }
