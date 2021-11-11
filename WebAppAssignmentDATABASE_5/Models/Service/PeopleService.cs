@@ -9,7 +9,6 @@ namespace WebAppAssignmentDATABASE_5.Models
 {
     public class PeopleService : IPeopleService
     {
-        //Dependency Injection to the constructor
         IPeopleRepo _peopleRepo;
 
         public PeopleService(IPeopleRepo peopleRepo)
@@ -19,6 +18,8 @@ namespace WebAppAssignmentDATABASE_5.Models
 
         public Person Add(CreatePersonViewModel person)
         {
+
+
             return _peopleRepo.Create(person.Name, person.City, person.Phone);
         }
 
@@ -42,7 +43,7 @@ namespace WebAppAssignmentDATABASE_5.Models
 
             foreach (Person item in _peopleRepo.Read())
             {
-                if (item.City.Contains(search.FilterText, StringComparison.OrdinalIgnoreCase) || item.Name.Contains(search.FilterText, StringComparison.OrdinalIgnoreCase))
+                if (item.City.Name.Contains(search.FilterText, StringComparison.OrdinalIgnoreCase) || item.Name.Contains(search.FilterText, StringComparison.OrdinalIgnoreCase))
                 {
                     searchedPersonList.Add(item);
                 }
@@ -71,15 +72,6 @@ namespace WebAppAssignmentDATABASE_5.Models
             }
 
             return deleted;
-        }
-
-        public void CreateDefaultPeople()
-        {
-            _peopleRepo.Create("Ramya", "Göteborg", 017609856);
-            _peopleRepo.Create("Srinivas", "Bangelore", 0987986785);
-            _peopleRepo.Create("Mamatha", "Mysore", 009878967);
-            _peopleRepo.Create("Kishore", "Hyderabad", 0987967851);
-            _peopleRepo.Create("Saranya", "Stckholm", 091453147);
         }
     }
 }

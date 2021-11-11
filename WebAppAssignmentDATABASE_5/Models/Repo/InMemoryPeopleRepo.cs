@@ -11,9 +11,9 @@ namespace WebAppAssignmentDATABASE_5.Models
         private static List<Person> _personList = new List<Person>();
         private static int idCounter = 0;
 
-        public Person Create(string name, string city, int phoneNumber)
-        {
-            Person person = new Person(name, phoneNumber, city, idCounter);
+        public Person Create(string name, string city, int phoneNumber) 
+        {  
+            Person person = null;
             idCounter++;
 
             _personList.Add(person);
@@ -59,6 +59,10 @@ namespace WebAppAssignmentDATABASE_5.Models
             }
 
             return person;
+        }
+
+        public void GetAllPeopleFromDatabase() 
+        {
         }
     }
 }

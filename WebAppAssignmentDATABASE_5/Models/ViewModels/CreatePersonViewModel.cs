@@ -3,14 +3,15 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using System.ComponentModel.DataAnnotations;
+using Microsoft.AspNetCore.Mvc.Rendering;
+using Newtonsoft.Json;
 
 namespace WebAppAssignmentDATABASE_5.Models.ViewModel
 {
     public class CreatePersonViewModel
     {
-        [DataType(DataType.Text)]
-        [StringLength(20, MinimumLength =1)]
-        [Required(ErrorMessage = "* Please enter name"), MaxLength(50)]
+        [Required]
+        [StringLength(15, MinimumLength = 1)]
         public string Name { get; set; }
 
         [Required]
@@ -20,6 +21,11 @@ namespace WebAppAssignmentDATABASE_5.Models.ViewModel
         [Required]
         [StringLength(15, MinimumLength = 1)]
         public string City { get; set; }
+
+        public SelectList selectList { get; set; }
+
+        [Key]
+        public int Id { get; set; }
 
         public CreatePersonViewModel()
         {

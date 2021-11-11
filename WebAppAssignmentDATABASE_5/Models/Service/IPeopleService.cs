@@ -17,7 +17,5 @@ namespace WebAppAssignmentDATABASE_5.Models
         Person Edit(int id, Person person);
         bool Remove(int id);
 
-        void CreateDefaultPeople();
-
     }
 }

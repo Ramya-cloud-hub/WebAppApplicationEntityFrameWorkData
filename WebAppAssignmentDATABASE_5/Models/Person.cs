@@ -11,28 +11,32 @@ namespace WebAppAssignmentDATABASE_5.Models
     {
 
         [Required]
-        [MaxLength(15)]
+        [MaxLength(20)]
         [MinLength(1)]
         public string Name { get; set; }
 
         [Required]
-        [Range(10, 14)]
+        [Range(9, 16)]
         public int Phone { get; set; }
-
-        [Required]
-        [MaxLength(15)]
-        [MinLength(1)]
-        public string City { get; set; }
 
         [Required]
         public int Id { get; set; }
 
-        public Person(string name, int phone, string city, int id)
+        [Required]
+        [MaxLength(15)]
+        [MinLength(1)]
+        public City City { get; set; }
+
+        public Person(string Name, int Phone)
         {
-            Name = name;
-            Phone = phone;
-            City = city;
-            Id = id;
+            this.Name = Name;
+            this.Phone = Phone;
+        }
+        public Person(string Name, int Phone, int Id)
+        {
+            this.Name = Name;
+            this.Phone = Phone;
+            this.Id = Id;
         }
 
     }

@@ -1,9 +1,12 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Rendering;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using WebAppAssignmentDATABASE_5.Data;
 using WebAppAssignmentDATABASE_5.Models;
+using WebAppAssignmentDATABASE_5.Models.Service;
 using WebAppAssignmentDATABASE_5.Models.ViewModel;
 
 namespace WebAppAssignmentDATABASE_5.Controllers
@@ -12,20 +15,19 @@ namespace WebAppAssignmentDATABASE_5.Controllers
     {
 
         IPeopleService _peopleService;
+        ICityService _cityService;
+        PeopleDbContext _context;
 
-        public PeopleController(IPeopleService peopleService)
+        public PeopleController(IPeopleService peopleService, ICityService cityService, PeopleDbContext context)
         {
             _peopleService = peopleService;
+            _cityService = cityService;
+            _context = context;
         }
 
         [HttpGet]
         public IActionResult Index()
         {
-            if (_peopleService.All().PersonList.Count == 0)
-            {
-                _peopleService.CreateDefaultPeople();
-            }
-
             return View(_peopleService.All());
         }
 
@@ -46,7 +48,11 @@ namespace WebAppAssignmentDATABASE_5.Controllers
         [HttpGet]
         public IActionResult Create()
         {
-            return View();
+            CreatePersonViewModel vm = new CreatePersonViewModel();
+            vm.selectList = new SelectList(_context.Cities, "Name", "Name");
+
+            return View(vm);
+            //return View();
         }
 
         [HttpPost]
@@ -54,11 +60,16 @@ namespace WebAppAssignmentDATABASE_5.Controllers
         {
             if (ModelState.IsValid)
             {
-                _peopleService.Add(createPersonViewModel);
+                Person person = _peopleService.Add(createPersonViewModel);
+
+                int cityId = _context.Cities.Where(c => c.Name == createPersonViewModel.City).First().CityId;
+
+                _cityService.AddPersonToCity(cityId, person);
 
                 return RedirectToAction(nameof(Index));
             }
 
+            createPersonViewModel.selectList = new SelectList(_context.Cities, "Name", "Name");
             return View(createPersonViewModel);
         }
 
